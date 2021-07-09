@@ -11,9 +11,10 @@ entity Developer {
 
 entity Column {
 	id Long
+    name String
 }
 
-relationship OneToMany {
+relationship ManyToMany {
 	Developer{task} to Task
 }
 
