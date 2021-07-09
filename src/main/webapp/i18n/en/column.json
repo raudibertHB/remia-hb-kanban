@@ -18,6 +18,7 @@
         "title": "Column"
       },
       "id": "Id",
+      "name": "Name",
       "task": "Task"
     }
   }

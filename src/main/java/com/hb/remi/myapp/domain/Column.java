@@ -21,6 +21,9 @@ public class Column implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "developer" }, allowSetters = true)
     private Task task;
@@ -37,6 +40,19 @@ public class Column implements Serializable {
     public Column id(Long id) {
         this.id = id;
         return this;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Column name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Task getTask() {
@@ -76,6 +92,7 @@ public class Column implements Serializable {
     public String toString() {
         return "Column{" +
             "id=" + getId() +
+            ", name='" + getName() + "'" +
             "}";
     }
 }

@@ -33,6 +33,7 @@
       <thead>
         <tr>
           <th scope="col"><span jhiTranslate="kanbanApp.column.id">Id</span></th>
+          <th scope="col"><span jhiTranslate="kanbanApp.column.name">Name</span></th>
           <th scope="col"><span jhiTranslate="kanbanApp.column.task">Task</span></th>
           <th scope="col"></th>
         </tr>
@@ -42,6 +43,7 @@
           <td>
             <a [routerLink]="['/column', column.id, 'view']">{{ column.id }}</a>
           </td>
+          <td>{{ column.name }}</td>
           <td>
             <div *ngIf="column.task">
               <a [routerLink]="['/task', column.task?.id, 'view']">{{ column.task?.id }}</a>

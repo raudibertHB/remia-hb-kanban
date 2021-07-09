@@ -21,6 +21,7 @@ export class ColumnUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
+    name: [],
     task: [],
   });
 
@@ -79,6 +80,7 @@ export class ColumnUpdateComponent implements OnInit {
   protected updateForm(column: IColumn): void {
     this.editForm.patchValue({
       id: column.id,
+      name: column.name,
       task: column.task,
     });
 
@@ -97,6 +99,7 @@ export class ColumnUpdateComponent implements OnInit {
     return {
       ...new Column(),
       id: this.editForm.get(['id'])!.value,
+      name: this.editForm.get(['name'])!.value,
       task: this.editForm.get(['task'])!.value,
     };
   }
