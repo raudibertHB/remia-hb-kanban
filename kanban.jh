@@ -11,6 +11,7 @@ entity Developer {
 
 entity Column {
 	id Long
+    name String
 }
 
 relationship OneToMany {
