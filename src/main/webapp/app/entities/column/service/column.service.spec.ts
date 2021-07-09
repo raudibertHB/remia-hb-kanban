@@ -22,6 +22,7 @@ describe('Service Tests', () => {
 
       elemDefault = {
         id: 0,
+        name: 'AAAAAAA',
       };
     });
 
@@ -57,6 +58,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 1,
+            name: 'BBBBBB',
           },
           elemDefault
         );
@@ -71,7 +73,12 @@ describe('Service Tests', () => {
       });
 
       it('should partial update a Column', () => {
-        const patchObject = Object.assign({}, new Column());
+        const patchObject = Object.assign(
+          {
+            name: 'BBBBBB',
+          },
+          new Column()
+        );
 
         const returnedFromService = Object.assign(patchObject, elemDefault);
 
@@ -88,6 +95,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 1,
+            name: 'BBBBBB',
           },
           elemDefault
         );
@@ -139,7 +147,7 @@ describe('Service Tests', () => {
         });
 
         it('should add only unique Column to an array', () => {
-          const columnArray: IColumn[] = [{ id: 123 }, { id: 456 }, { id: 91844 }];
+          const columnArray: IColumn[] = [{ id: 123 }, { id: 456 }, { id: 2803 }];
           const columnCollection: IColumn[] = [{ id: 123 }];
           expectedResult = service.addColumnToCollectionIfMissing(columnCollection, ...columnArray);
           expect(expectedResult).toHaveLength(3);

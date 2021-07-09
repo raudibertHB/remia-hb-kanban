@@ -122,6 +122,10 @@ public class ColumnResource {
             .findById(column.getId())
             .map(
                 existingColumn -> {
+                    if (column.getName() != null) {
+                        existingColumn.setName(column.getName());
+                    }
+
                     return existingColumn;
                 }
             )

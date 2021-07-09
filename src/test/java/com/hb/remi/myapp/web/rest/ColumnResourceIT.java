@@ -29,6 +29,9 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ColumnResourceIT {
 
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/columns";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -53,7 +56,7 @@ class ColumnResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Column createEntity(EntityManager em) {
-        Column column = new Column();
+        Column column = new Column().name(DEFAULT_NAME);
         return column;
     }
 
@@ -64,7 +67,7 @@ class ColumnResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Column createUpdatedEntity(EntityManager em) {
-        Column column = new Column();
+        Column column = new Column().name(UPDATED_NAME);
         return column;
     }
 
@@ -86,6 +89,7 @@ class ColumnResourceIT {
         List<Column> columnList = columnRepository.findAll();
         assertThat(columnList).hasSize(databaseSizeBeforeCreate + 1);
         Column testColumn = columnList.get(columnList.size() - 1);
+        assertThat(testColumn.getName()).isEqualTo(DEFAULT_NAME);
     }
 
     @Test
@@ -117,7 +121,8 @@ class ColumnResourceIT {
             .perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(column.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(column.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
     }
 
     @Test
@@ -131,7 +136,8 @@ class ColumnResourceIT {
             .perform(get(ENTITY_API_URL_ID, column.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(column.getId().intValue()));
+            .andExpect(jsonPath("$.id").value(column.getId().intValue()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
     }
 
     @Test
@@ -153,6 +159,7 @@ class ColumnResourceIT {
         Column updatedColumn = columnRepository.findById(column.getId()).get();
         // Disconnect from session so that the updates on updatedColumn are not directly saved in db
         em.detach(updatedColumn);
+        updatedColumn.name(UPDATED_NAME);
 
         restColumnMockMvc
             .perform(
@@ -166,6 +173,7 @@ class ColumnResourceIT {
         List<Column> columnList = columnRepository.findAll();
         assertThat(columnList).hasSize(databaseSizeBeforeUpdate);
         Column testColumn = columnList.get(columnList.size() - 1);
+        assertThat(testColumn.getName()).isEqualTo(UPDATED_NAME);
     }
 
     @Test
@@ -248,6 +256,7 @@ class ColumnResourceIT {
         List<Column> columnList = columnRepository.findAll();
         assertThat(columnList).hasSize(databaseSizeBeforeUpdate);
         Column testColumn = columnList.get(columnList.size() - 1);
+        assertThat(testColumn.getName()).isEqualTo(DEFAULT_NAME);
     }
 
     @Test
@@ -262,6 +271,8 @@ class ColumnResourceIT {
         Column partialUpdatedColumn = new Column();
         partialUpdatedColumn.setId(column.getId());
 
+        partialUpdatedColumn.name(UPDATED_NAME);
+
         restColumnMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedColumn.getId())
@@ -274,6 +285,7 @@ class ColumnResourceIT {
         List<Column> columnList = columnRepository.findAll();
         assertThat(columnList).hasSize(databaseSizeBeforeUpdate);
         Column testColumn = columnList.get(columnList.size() - 1);
+        assertThat(testColumn.getName()).isEqualTo(UPDATED_NAME);
     }
 
     @Test
