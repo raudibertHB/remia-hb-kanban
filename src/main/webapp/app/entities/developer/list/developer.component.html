@@ -1,0 +1,78 @@
+<div>
+  <h2 id="page-heading" data-cy="DeveloperHeading">
+    <span jhiTranslate="kanbanApp.developer.home.title">Developers</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="kanbanApp.developer.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-developer"
+        [routerLink]="['/developer/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="kanbanApp.developer.home.createLabel"> Create a new Developer </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="developers?.length === 0">
+    <span jhiTranslate="kanbanApp.developer.home.notFound">No developers found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="developers && developers.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="kanbanApp.developer.id">Id</span></th>
+          <th scope="col"><span jhiTranslate="kanbanApp.developer.name">Name</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let developer of developers; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/developer', developer.id, 'view']">{{ developer.id }}</a>
+          </td>
+          <td>{{ developer.name }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/developer', developer.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/developer', developer.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(developer)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

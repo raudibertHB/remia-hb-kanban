@@ -1,0 +1,22 @@
+entity Task {
+	id Long
+	title String
+	description String
+}
+
+entity Developer {
+	id Long
+	name String
+}
+
+entity Column {
+	id Long
+}
+
+relationship OneToMany {
+	Developer{task} to Task
+}
+
+relationship ManyToOne {
+	Column{task} to Task
+}
