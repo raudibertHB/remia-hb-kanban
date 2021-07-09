@@ -1,0 +1,34 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="column">
+      <h2 data-cy="columnDetailsHeading"><span jhiTranslate="kanbanApp.column.detail.title">Column</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="kanbanApp.column.id">Id</span></dt>
+        <dd>
+          <span>{{ column.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="kanbanApp.column.task">Task</span></dt>
+        <dd>
+          <div *ngIf="column.task">
+            <a [routerLink]="['/task', column.task?.id, 'view']">{{ column.task?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/column', column.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+{
+  "kanbanApp": {
+    "column": {
+      "home": {
+        "title": "Columns",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Column",
+        "createOrEditLabel": "Create or edit a Column",
+        "notFound": "No Columns found"
+      },
+      "created": "A new Column is created with identifier {{ param }}",
+      "updated": "A Column is updated with identifier {{ param }}",
+      "deleted": "A Column is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Column {{ id }}?"
+      },
+      "detail": {
+        "title": "Column"
+      },
+      "id": "Id",
+      "task": "Task"
+    }
+  }
+}
